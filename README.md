@@ -1,59 +1,94 @@
-# Medical Sample Sorter
-
-This repository contains the source code and documentation for the **Medical Sample Sorter**, a project developed for the Electronic Measurements and Sensors course at the Faculty of Automatic Control and Computers. The system uses an Arduino Uno and a TCS3200 color sensor to detect and differentiate medical samples based on their color. By mapping sensor readings to RGB values, the system classifies samples for sorting and further analysis.
+# Medical Sample Sorting and Differentiation System
+A color-based medical sample classification system using Arduino and TCS3200 color sensor.
 
 ## Overview
 
-- **Purpose:**  
-  To demonstrate how a TCS3200 color sensor can be integrated with an Arduino to perform precise color detection for sorting and differentiating medical samples.
+This project implements an automated system for sorting and differentiating medical samples based on their color profiles. By utilizing precise color detection technology, the system can categorize samples with higher accuracy and efficiency than manual sorting methods.
 
-- **Key Features:**  
-  - **Color Detection:** Reads red, green, and blue pulse widths from the TCS3200 sensor.
-  - **Data Mapping:** Maps raw sensor data to a 0–255 scale for each color channel.
-  - **Serial Output:** Prints the computed RGB values to the Serial Monitor for real-time monitoring and debugging.
-  - **Alternate Hardware Options:**  
-    In addition to using the TCS3200, the system can also be implemented with a setup that includes:
-    - ISL29125 Color Sensor
-    - Two-channel logic converter
-    - 4 LEDs
-    - 4 Resistors
+## Features
 
-## Hardware & Software
+- Real-time RGB color detection
+- Custom calibration for laboratory environment
+- Digital color mapping (0-255 scale)
+- Serial output for monitoring
 
-- **Hardware:**  
-  - Arduino Uno  
-  - TCS3200 Color Sensor *or* an alternative configuration (ISL29125, two-channel logic converter, 4 LEDs, 4 Resistors)  
-  - Connecting wires and a suitable power supply
+## Hardware Components
 
-- **Software:**  
-  - Arduino IDE for coding and uploading the sketch  
-  - C/C++ language (Arduino sketch) for sensor interfacing and data processing
+- Arduino Uno microcontroller
+- TCS3200 Color Sensor module
+- Connecting wires
+- Optional: Sample holding/feeding mechanism
 
-## How It Works
+## Pin Configuration
 
-1. **Sensor Configuration:**  
-   The TCS3200 sensor is set up with its frequency scaling pins (S0–S3) configured to output a 20% scaled signal.
+| TCS3200 Pin | Arduino Pin |
+|-------------|-------------|
+| S0          | 4           |
+| S1          | 5           |
+| S2          | 6           |
+| S3          | 7           |
+| OUT         | 8           |
+| VCC         | 5V          |
+| GND         | GND         |
 
-2. **Color Measurement:**  
-   Separate functions are used to measure the pulse width corresponding to red, green, and blue channels. These pulse widths are then mapped to RGB values (0–255).
+## Software Requirements
 
-3. **Output:**  
-   The computed RGB values are output to the Serial Monitor, which can be used to verify the sensor’s performance and the accuracy of the color detection algorithm.
+- Arduino IDE
+- Serial Monitor (included in Arduino IDE)
 
-## Getting Started
+## Installation and Setup
 
-1. **Hardware Setup:**  
-   - Connect the TCS3200 sensor (or the alternative sensor configuration) to the Arduino Uno using the defined pins in the sketch.
-   - Ensure proper power supply and sensor orientation for accurate detection.
+1. Connect the TCS3200 sensor to the Arduino according to the pin configuration table
+2. Install Arduino IDE if not already installed
+3. Download the project code
+4. Open the `.ino` file in Arduino IDE
+5. Upload the code to your Arduino board
 
-2. **Software Setup:**  
-   - Open the provided `main.ino` file in the Arduino IDE.
-   - Verify or adjust the calibration values (`redMin`, `greenMin`, `blueMin`, etc.) if necessary.
+## Calibration
 
-3. **Upload and Run:**  
-   - Upload the sketch to your Arduino Uno.
-   - Open the Serial Monitor (set to 9600 baud) to observe the RGB values detected by the sensor in real time.
+The system relies on proper calibration for accurate color detection. The current code includes default calibration values:
 
-## Results & Conclusions
+```
+int redMin = 52;    int redMax = 241;
+int greenMin = 89;  int greenMax = 275;
+int blueMin = 85;   int blueMax = 199;
+```
 
-The system has been successfully implemented to detect subtle differences in color, proving its potential for sorting medical samples based on color. The project demonstrates how low-cost sensor technology can be applied in the medical field to enhance diagnostic and sorting procedures.
+For optimal performance in your specific environment:
+1. Use the included calibration sketch (not shown in current files)
+2. Update the min/max values in the main code
+
+## Usage
+
+1. Position the sensor at an appropriate distance from sample (typically 1-2cm)
+2. Ensure consistent lighting conditions
+3. Run the system and monitor RGB values via Serial Monitor
+4. Implement sorting logic based on color profiles of your specific samples
+
+## Output
+
+The system outputs RGB values (0-255 scale) to the Serial Monitor in the format:
+```
+Red = [value] - Green = [value] - Blue = [value]
+```
+
+## Applications
+
+- Clinical laboratory sample sorting
+- Medical test result differentiation
+- Quality control for reagents and solutions
+- Automated medical diagnostics
+
+## Future Improvements
+
+- Add physical sorting mechanism
+- Implement machine learning for improved classification
+- Create a database of sample color profiles
+- Add a display interface for visual feedback
+- Integrate with laboratory information systems
+
+## References
+
+- [TCS3200 Color Sensor Datasheet](https://www.mouser.com/catalog/specsheets/tcs3200-e11.pdf)
+- [Arduino Official Documentation](https://www.arduino.cc/)
+- [DroneBot Workshop Color Sensing Tutorial](https://dronebotworkshop.com/arduino-color-sense/)
